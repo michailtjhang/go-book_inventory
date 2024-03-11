@@ -4,9 +4,10 @@ go 1.22.0
 
 require (
 	github.com/gin-gonic/gin v1.9.1
+	github.com/golang-jwt/jwt/v4 v4.5.0
 	github.com/jinzhu/gorm v1.9.16
-	github.com/joho/godotenv v1.5.1 
-	github.com/lib/pq v1.10.9 
+	github.com/joho/godotenv v1.5.1
+	github.com/lib/pq v1.10.9
 )
 
 require (
