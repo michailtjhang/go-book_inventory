@@ -28,7 +28,7 @@ func main() {
 
 	// Get All Books
 	router.GET("/books", middleware.AuthValid, handler.GetBooks)
-	router.GET("/books/:id", middleware.AuthValid, handler.GetBookByID)
+	router.GET("/book/:id", middleware.AuthValid, handler.GetBookByID)
 
 	// Add Books
 	router.GET("/addBook", middleware.AuthValid, handler.AddBook)
@@ -39,7 +39,7 @@ func main() {
 	router.POST("/updateBook/:id", middleware.AuthValid, handler.PutUpdateBook)
 
 	// Delete Books
-	router.GET("/deleteBook/:id", middleware.AuthValid, handler.DeleteBook)
+	router.POST("/deleteBook/:id", middleware.AuthValid, handler.DeleteBook)
 
 	router.Run()
 }

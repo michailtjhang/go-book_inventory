@@ -24,6 +24,7 @@ func (h *Handler) GetBooks(c *gin.Context) {
 	c.HTML(http.StatusOK, "index.html", gin.H{
 		"title":   "Home Page",
 		"payload": books,
+		"auth":    c.Query("auth"),
 	})
 }
 
@@ -36,7 +37,7 @@ func (h *Handler) GetBookByID(c *gin.Context) {
 		c.AbortWithStatus(http.StatusNotFound)
 	}
 
-	c.HTML(http.StatusOK, "book.html", gin.H{
+	c.HTML(http.StatusOK, "Book.html", gin.H{
 		"title":   books.Title,
 		"payload": books,
 		"auth":    c.Query("auth"),
@@ -55,7 +56,7 @@ func (h *Handler) SaveBook(c *gin.Context) {
 
 	c.Bind(&book)
 	h.DB.Create(&book)
-	c.Redirect(http.StatusMovedPermanently, fmt.Sprintf("/books?auth=%s", c.Query("auth")))
+	c.Redirect(http.StatusMovedPermanently, fmt.Sprintf("/books?auth=%s", c.PostForm("auth")))
 }
 
 func (h *Handler) UpdateBook(c *gin.Context) {
@@ -90,7 +91,7 @@ func (h *Handler) PutUpdateBook(c *gin.Context) {
 
 	h.DB.Model(&book).Where("id=?", bookID).Update(&reqBook)
 
-	c.Redirect(http.StatusMovedPermanently, fmt.Sprintf("/books/%s?auth=%s", bookID, c.Query("auth")))
+	c.Redirect(http.StatusMovedPermanently, fmt.Sprintf("/book/%s?auth=%s", bookID, c.PostForm("auth")))
 }
 
 func (h *Handler) DeleteBook(c *gin.Context) {
@@ -99,5 +100,5 @@ func (h *Handler) DeleteBook(c *gin.Context) {
 	bookID := c.Param("id")
 	h.DB.Delete(&book, "id=?", bookID)
 
-	c.Redirect(http.StatusMovedPermanently, fmt.Sprintf("/books?auth=%s", c.Query("auth")))
+	c.Redirect(http.StatusMovedPermanently, fmt.Sprintf("/books?auth=%s", c.PostForm("auth")))
 }
