@@ -52,7 +52,7 @@ func LoginPostHandler(c *gin.Context) {
 		}
 
 		q := url.Values{}
-		q.Add("token", token)
+		q.Set("auth", token)
 		location := url.URL{Path: "/books", RawQuery: q.Encode()}
 		c.Redirect(http.StatusMovedPermanently, location.String())
 	}
