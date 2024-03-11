@@ -2,8 +2,11 @@ package db
 
 import (
 	"book_inventory/models"
+	_ "database/sql"
 	"log"
 	"os"
+
+	_ "github.com/lib/pq"
 
 	"github.com/jinzhu/gorm"
 	"github.com/joho/godotenv"
