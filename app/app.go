@@ -2,6 +2,7 @@ package app
 
 import (
 	"book_inventory/models"
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -40,4 +41,19 @@ func (h *Handler) GetBookByID(c *gin.Context) {
 		"payload": books,
 		"auth":    c.Query("auth"),
 	})
+}
+
+func (h *Handler) AddBook(c *gin.Context) {
+	c.HTML(http.StatusOK, "formBook.html", gin.H{
+		"title": "Add Books",
+		"auth":  c.Query("auth"),
+	})
+}
+
+func (h *Handler) SaveBook(c *gin.Context) {
+	var book models.Book
+
+	c.Bind(&book)
+	h.DB.Create(&book)
+	c.Redirect(http.StatusMovedPermanently, fmt.Sprintf("/books?auth=%s", c.Query("auth")))
 }
