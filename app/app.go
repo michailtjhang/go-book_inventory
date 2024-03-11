@@ -25,3 +25,19 @@ func (h *Handler) GetBooks(c *gin.Context) {
 		"payload": books,
 	})
 }
+
+func (h *Handler) GetBookByID(c *gin.Context) {
+	BookID := c.Param("id")
+
+	var books models.Book
+
+	if h.DB.Find(&books, "id=?", BookID).RecordNotFound() {
+		c.AbortWithStatus(http.StatusNotFound)
+	}
+
+	c.HTML(http.StatusOK, "book.html", gin.H{
+		"title":   books.Title,
+		"payload": books,
+		"auth":    c.Query("auth"),
+	})
+}
